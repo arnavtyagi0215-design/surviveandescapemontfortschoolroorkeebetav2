@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>Survive &amp; Escape the Montfort School Roorkee</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="game"></div><div id="grain"></div>
+<div id="menu">
+ <div class="menu-wrap">
+  <div class="topline"><div class="eyebrow">A first-person school escape</div><div class="badge">3 Wings · 2 Days · Stay unseen</div></div>
+  <h1>Survive &amp; Escape<span>Montfort School Roorkee</span></h1>
+  <section class="story-card" aria-label="Opening story">
+   <div class="story-kicker"><span class="story-dot"></span> THE STORY · 11:47 PM</div>
+   <p class="story-copy">At 11:47 PM, a sudden power failure locks the school and wakes you at your classroom desk. The three wings feel familiar in daylight, but the empty corridors are different now. Teachers are still making their rounds, listening for running footsteps. Find three classroom keys to reach the yard; then collect a gate wheel, a fuse and the main-gate key. Keep quiet, follow your map, and escape before morning assembly.</p>
+  </section>
+  <p class="subtitle">Pick a wing, search its classrooms, unlock the school exit, then cross the yard and open the main gate.</p>
+  <div class="quality-row"><span class="quality-label">GRAPHICS</span><button class="quality-btn selected" data-quality="high">HIGH DETAIL</button><button class="quality-btn" data-quality="balanced">SMOOTHER PLAY</button><span id="qualityStatus">High detail · device adaptive</span></div>
+  <div class="section-label difficulty-heading">Choose difficulty</div>
+  <div class="difficulty-options" role="radiogroup" aria-label="Choose game difficulty">
+   <button type="button" class="difficulty-btn" data-difficulty="easy" aria-pressed="false"><b>Easy</b><small>More time · teachers notice you later</small></button>
+   <button type="button" class="difficulty-btn selected" data-difficulty="normal" aria-pressed="true"><b>Normal</b><small>Balanced time and patrols</small></button>
+   <button type="button" class="difficulty-btn" data-difficulty="hard" aria-pressed="false"><b>Hard</b><small>Less time · faster, sharper teachers</small></button>
+  </div>
+  <div class="section-label">Choose your building</div>
+  <div class="cards">
+   <button class="card selected" data-wing="Senior" style="--accent:#70d5bb"><i></i><b>Senior Wing</b><small>Long halls · deeper shadows · brisk patrols</small></button>
+   <button class="card" data-wing="Middle" style="--accent:#78aaff"><i></i><b>Middle Wing</b><small>Classroom maze · more places to turn</small></button>
+   <button class="card" data-wing="Primary" style="--accent:#ffc86b"><i></i><b>Primary Wing</b><small>Bright colors · crowded rooms · quick corners</small></button>
+  </div>
+  <div class="menu-bottom">
+   <div class="controls-copy"><strong>WASD</strong> move · <strong>Mouse drag</strong> look · <strong>Shift</strong> run · <strong>C</strong> crouch · <strong>Space</strong> jump · <strong>E</strong> use doors/items · <strong>Q</strong> noisemaker · <strong>G</strong> smoke · <strong>F</strong> flashlight<br>Phone (landscape): left joystick moves · drag the open view to look · tap CROUCH to sneak and use the other action buttons.</div>
+   <button id="start" class="primary">Enter the school&nbsp; →</button>
+  </div>
+ </div>
+</div>
+<div id="hud">
+ <div class="hud-top">
+  <div class="hud-panel"><div class="hud-title" id="wingLabel">Senior Wing</div><div class="hud-value" id="dayLabel">DAY 1 / 2</div><div class="stealth-status" id="stealthStatus">STANDING · VISIBLE</div></div>
+  <div class="hud-row">
+   <div class="hud-panel"><div class="hud-title" id="collectTitle">Classroom keys</div><div class="hud-value" id="keyLabel">0 / 3</div></div>
+   <div class="hud-panel"><div class="hud-title">Time left</div><div class="hud-value" id="timeLabel">08:00</div></div>
+   <div class="hud-panel"><div class="hud-title">Stamina</div><div class="meter"><i id="staminaBar"></i></div></div>
+  </div>
+ </div>
+ <aside id="mapPanel" aria-label="Live school map">
+  <div class="map-heading"><span>SCHOOL MAP</span><span id="mapWing">SENIOR</span></div>
+  <canvas id="mapCanvas" width="204" height="276" aria-label="Map showing your position and nearby staff"></canvas>
+  <div class="map-legend"><span><i class="legend-you"></i>You</span><span><i class="legend-staff"></i>Staff</span><span><i class="legend-key"></i>Keys</span></div>
+ </aside>
+ <div id="hint"></div><div id="crosshair"></div><div id="alert">SPOTTED!</div>
+ <div id="message">Find the keys. Watch the hall.</div><div id="vignette"></div>
+ <div class="mobile" id="stick"><div id="nub"></div></div>
+ <div class="mobile mobile-buttons">
+  <button class="mbtn" data-action="run">RUN</button><button class="mbtn" data-action="jump">JUMP</button><button class="mbtn" id="crouchButton" data-action="crouch" aria-pressed="false">CROUCH</button><button class="mbtn" data-action="use">USE</button>
+  <button class="mbtn" data-action="noise">NOISE</button><button class="mbtn" data-action="smoke">SMOKE</button><button class="mbtn" data-action="light">LIGHT</button>
+ </div>
+ <div id="looktip">HOLD LEFT MOUSE + DRAG TO LOOK · ← → ALSO TURN</div>
+</div>
+<div id="rotatePrompt"><div class="rotate-card"><div class="rotate-icon">▱</div><strong>Rotate your phone</strong><span>This game plays in landscape.</span></div></div>
+<div id="caught"><div class="dialog"><div class="eyebrow">A staff member caught up with you</div><h2>Back to class.</h2><p>You were tagged. You keep the items you found, but lose precious time. Take another route, or use a distraction to slip away.</p><button class="primary" id="retry">Try again</button></div></div>
+<div id="won"><div class="dialog"><div class="eyebrow">The main gate is open</div><h2>You made it out.</h2><p>You found the classroom keys, escaped the building, gathered the gate parts and made it beyond the school.</p><button class="primary" id="again">Play another wing</button></div></div>
+<script src="https://cdn.jsdelivr.net/npm/three@0.159.0/build/three.min.js" onerror="this.onerror=null;document.querySelector('#start').textContent='3D needs internet';"></script>
+<script src="game.js"></script>
+</body>
+</html>
